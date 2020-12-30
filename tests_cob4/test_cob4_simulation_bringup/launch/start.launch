@@ -1,0 +1,75 @@
+<launch>
+
+  <env name="GAZEBO_MODEL_PATH" value="$(find test_fetch_simulation_bringup)/gazebo/models:$(find fetch_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)" />
+
+  <arg name="robot" default="fetch"/>
+  <arg name="debug" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="joy" default="false"/>
+  
+  <!-- Fetch's base initial pose -->
+  <arg name="x" default="0.0" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="0.0" />
+  <arg name="yaw" default="0.0" />
+  
+  <arg name="world_name" default="test_zone.sdf" /> <!-- test_zone.sdf, test_zone_pick_place.sdf, empty.world-->
+  <arg name="prepare_robot_pick_place" default="true" />
+
+  <!-- Start Gazebo with a blank world -->
+  <include file="$(find test_fetch_simulation_bringup)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="world_name" value="$(find test_fetch_simulation_bringup)/gazebo/worlds/$(arg world_name)"/>
+  </include>
+
+  <!-- Setup controllers -->
+  <rosparam file="$(find fetch_gazebo)/config/default_controllers.yaml" command="load" />
+
+  <!-- URDF and TF support -->
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find fetch_gazebo)/robots/fetch.gazebo.xacro" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+    <param name="publish_frequency" value="100.0"/>
+  </node>
+
+  <!-- Put a robot in gazebo, make it look pretty -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw) -model fetch -param robot_description"/>
+  
+  <group if="$(arg prepare_robot_pick_place)">
+    <node name="prepare_robot" pkg="fetch_gazebo" type="prepare_simulated_robot_pick_place.py" />
+  </group>
+  <group unless="$(arg prepare_robot_pick_place)">
+    <node name="prepare_robot" pkg="fetch_gazebo" type="prepare_simulated_robot.py" />
+  </group>
+
+  <!-- Give this robot a serial number and version -->
+  <param name="robot/serial" value="ABCDEFGHIJKLMNOPQRSTUVWX" />
+  <param name="robot/version" value="0.0.1" />
+
+  <!-- Head Camera Pipeline -->
+  <include file="$(find fetch_gazebo)/launch/include/head_camera.launch.xml" />
+
+  <!-- Publish base_scan_raw if anything subscribes to it -->
+  <node name="publish_base_scan_raw" pkg="topic_tools" type="relay" args="base_scan base_scan_raw" >
+    <param name="lazy" type="bool" value="True"/>
+  </node>
+
+  <!-- Start a mux between application and teleop -->
+  <node pkg="topic_tools" type="mux" name="cmd_vel_mux" respawn="true" args="base_controller/command /cmd_vel /teleop/cmd_vel">
+    <remap from="mux" to="cmd_vel_mux" />
+  </node>
+  
+
+  <!--This is needed for the augmented controller, it publishes the srdf-->
+  <include if="$(arg joy)" file="$(find fetch_moveit_config)/launch/planning_context.launch"/>  
+
+  <!-- Start the joystick teleop node -->
+  <include if="$(arg joy)" file="$(find fetch_teleop)/launch/teleop.launch"/>
+
+  
+</launch>

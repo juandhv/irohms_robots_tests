@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>test_cob4_simulation_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_cob4_simulation_bringup package</description>
+
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan David Hernandez Vega</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Cob4 -->
+  <depend>cob_bringup_sim</depend>
+  
+  <!-- Vicon -->
+  <depend>vicon_bridge_emulator</depend>
+  
+</package>

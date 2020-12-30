@@ -1,0 +1,54 @@
+<launch>
+	<arg name="vicon_bridge" default="false" />
+	<arg name="vicon_localization" default="false" />
+	<arg name="mapping" default="true" />
+	<arg name="world_name" default="test_zone_pick_place.sdf" /> <!-- test_zone.sdf, test_zone_pick_place.sdf -->
+	<arg name="moveit" default="false"/>
+	<arg name="output" default="log"/>
+	<arg name="map_file" default="simulation_map_gmapping"/>
+	<arg name="allow_active_sensing" default="true"/>
+	<arg name="vicon_bridge_params_file" default="localization_tests.yaml"/>
+	<arg name="prepare_robot_pick_place" default="true" />
+        <arg name="gui" default="true"/>
+
+  	
+  	<!-- Start Gazebo simulation -->
+  	<include file="$(find test_fetch_simulation_bringup)/launch/start.launch" >
+  		<arg name="world_name" value="$(arg world_name)" />
+  		<arg name="prepare_robot_pick_place" value="$(arg prepare_robot_pick_place)" />
+               <arg name="gui" value="$(arg gui)" />
+  	</include>
+  
+	<!-- Navigation using Vicon bridge -->
+	<group if="$(arg vicon_bridge)">
+		<include file="$(find test_fetch_common_bringup)/launch/vicon_bridge.launch">
+			<arg name="simulation" value="true" />
+			<arg name="vicon_bridge_params_file" value="$(arg vicon_bridge_params_file)" />
+	    </include>
+	</group>
+	
+	<!-- Navigation using Vicon -->
+	<group if="$(arg vicon_localization)">
+		<!-- Vicon Localization -->
+		<include file="$(find test_fetch_common_bringup)/launch/vicon_localization.launch">
+			<arg name="simulation" value="true" />
+	    </include>
+	</group>
+	<!-- Navigation using SLAM or AMCL -->
+	<group unless="$(arg vicon_localization)">
+		<!-- Localization and Mapping. SLAM if mapping:= true, only localization if false -->
+		<include file="$(find test_fetch_common_bringup)/launch/slam.launch">
+			<arg name="mapping" value="$(arg mapping)" />
+			<arg name="map_file" value="$(arg map_file)" />
+			<arg name="simulation" value="true" />
+	    </include>
+	</group>
+	
+	<!-- Moveit -->
+	<group if="$(arg moveit)">
+		<include file="$(find fetch_moveit_config)/launch/move_group.launch" >
+			<arg name="allow_active_sensing" value="$(arg allow_active_sensing)" />
+	  	</include>
+	</group>
+
+</launch>
