@@ -14,6 +14,6 @@
   <depend>cob_bringup_sim</depend>
   
   <!-- Vicon -->
-  <depend>vicon_bridge_emulator</depend>
+  <!--depend>vicon_bridge_emulator</depend-->
   
 </package>
