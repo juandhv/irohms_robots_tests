@@ -4,7 +4,7 @@
   <version>0.0.0</version>
   <description>The test_cob4_simulation_bringup package</description>
 
-  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan David Hernandez Vega</maintainer>
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
 
   <license>TODO</license>
 
@@ -13,7 +13,8 @@
   <!-- Cob4 -->
   <depend>cob_bringup_sim</depend>
   
-  <!-- Vicon -->
-  <!--depend>vicon_bridge_emulator</depend-->
+  <!-- Test Cob4 -->
+  <depend>test_cob4_common_bringup</depend>
+  <depend>test_cob4_desktop_bringup</depend>
   
 </package>
