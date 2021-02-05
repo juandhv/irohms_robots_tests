@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>test_cob4_desktop_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_cob4_desktop_bringup package</description>
+
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>test_cob4_common_bringup</depend>
+  <depend>cob_teleop</depend>
+  <depend>rqt_gui</depend>
+  <depend>rviz</depend>
+</package>

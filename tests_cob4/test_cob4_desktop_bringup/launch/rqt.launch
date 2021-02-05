@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="bringup_package_path" value="$(find test_fetch_common_bringup)" />
+    <arg name="config" default="default" />
+    <arg name="output" default="screen" />
+    <arg name="respawn" default="false" />
+
+    <!-- RQT GUI -->
+    <node respawn="$(arg respawn)" name="rqt" pkg="rqt" type="rqt" args="$(arg bringup_package_path)/parameters/tools/rqt/$(arg config).perspective" />
+
+</launch>
