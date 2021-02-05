@@ -18,8 +18,8 @@ find_package(catkin REQUIRED
 #    geometric_shapes
 #    geometry_msgs
 #    control_msgs
-    vicon_object_server_msgs
-    vicon_object_server_library
+#    vicon_object_server_msgs
+#    vicon_object_server_library
 #    fetch_move_base_msgs
 #    gazebo_ros_link_attacher
 )
@@ -36,8 +36,8 @@ find_package(catkin REQUIRED
 #    geometric_shapes
 #    geometry_msgs
 #    control_msgs
-    vicon_object_server_msgs
-    vicon_object_server_library
+#    vicon_object_server_msgs
+#    vicon_object_server_library
 #    fetch_move_base_msgs
 )
 endif()
@@ -65,9 +65,9 @@ if(gazebo_ros_link_attacher_FOUND)
 	add_definitions(-DGAZEBO_LINK_ATTACHER)
 endif()
 
-add_executable(cob4_vicon_pick_up_can_demo src/cob4_moveit_demo.cpp)
-target_link_libraries(cob4_vicon_pick_up_can_demo ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(cob4_vicon_pick_up_can_demo ${catkin_EXPORTED_TARGETS})
+#add_executable(cob4_vicon_pick_up_can_demo src/cob4_moveit_demo.cpp)
+#target_link_libraries(cob4_vicon_pick_up_can_demo ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+#add_dependencies(cob4_vicon_pick_up_can_demo ${catkin_EXPORTED_TARGETS})
 
 
 catkin_add_env_hooks(99.test_cob4_common_functions SHELLS bash DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
