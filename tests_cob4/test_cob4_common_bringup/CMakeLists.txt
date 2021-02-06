@@ -7,10 +7,11 @@ find_package(gazebo_ros_link_attacher QUIET)
 
 if(gazebo_ros_link_attacher_FOUND)
 find_package(catkin REQUIRED
-  COMPONENTS
-#    moveit_core
-#    moveit_ros_planning
-#    moveit_ros_planning_interface
+  COMPONENTS 
+    roscpp
+    moveit_core
+    moveit_ros_planning
+    moveit_ros_planning_interface
 #    tf2
 #    tf2_ros
 #    tf2_eigen
@@ -26,9 +27,10 @@ find_package(catkin REQUIRED
 else()
 find_package(catkin REQUIRED
   COMPONENTS
-#    moveit_core
-#    moveit_ros_planning
-#    moveit_ros_planning_interface
+    roscpp
+    moveit_core
+    moveit_ros_planning
+    moveit_ros_planning_interface
 #    tf2
 #    tf2_ros
 #    tf2_eigen
@@ -65,9 +67,9 @@ if(gazebo_ros_link_attacher_FOUND)
 	add_definitions(-DGAZEBO_LINK_ATTACHER)
 endif()
 
-#add_executable(cob4_vicon_pick_up_can_demo src/cob4_moveit_demo.cpp)
-#target_link_libraries(cob4_vicon_pick_up_can_demo ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-#add_dependencies(cob4_vicon_pick_up_can_demo ${catkin_EXPORTED_TARGETS})
+add_executable(cob4_moveit_demo src/cob4_moveit_demo.cpp)
+target_link_libraries(cob4_moveit_demo ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(cob4_moveit_demo ${catkin_EXPORTED_TARGETS})
 
 
 catkin_add_env_hooks(99.test_cob4_common_functions SHELLS bash DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
