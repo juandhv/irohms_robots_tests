@@ -146,7 +146,7 @@ void Cob4MoveItDemo::run()
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "cob4_vicon_demo");
+    ros::init(argc, argv, "cob4_moveit_demo");
 
     Cob4MoveItDemo demo;
     demo.run();
