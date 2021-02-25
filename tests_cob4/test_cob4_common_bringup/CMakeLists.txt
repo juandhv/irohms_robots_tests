@@ -71,5 +71,10 @@ add_executable(cob4_moveit_demo src/cob4_moveit_demo.cpp)
 target_link_libraries(cob4_moveit_demo ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(cob4_moveit_demo ${catkin_EXPORTED_TARGETS})
 
+#### script to position cob4 to a home status ####
+add_executable(cob4_moveit_home src/cob4_moveit_home.cpp)
+target_link_libraries(cob4_moveit_home ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(cob4_moveit_home ${catkin_EXPORTED_TARGETS})
+
 
 catkin_add_env_hooks(99.test_cob4_common_functions SHELLS bash DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
