@@ -27,16 +27,14 @@
   		<arg name="robot_env" value="$(arg robot_env)" />
   		<arg name="gui" value="$(arg gui)" />
   	</include>
-	
-	<include file="$(find cob_navigation_slam)/launch/2dnav_ros_dwa.launch">
-		<arg name="robot" value="$(arg robot)" />
-    </include>
+
+	<include file="$(find cob_mapping_slam)/launch/2dslam.xml"/>
 
 	<!-- Including RVIZ to monitor mapping -->
 	<include file="$(find test_cob4_desktop_bringup)/launch/rviz.launch"/>
 
 	<!-- MoveIt! -->
-	<!-- <group if="$(arg moveit)">
+	<group if="$(arg moveit)">
 		<include file="$(find cob_moveit_bringup)/launch/move_group.launch" >
 			<arg name="robot" value="$(arg robot)" />
 			<arg name="pkg_hardware_config" value="$(arg pkg_hardware_config)"/>
@@ -48,8 +46,16 @@
 			<arg name="info" value="true"/>
 			<arg name="debug" value="$(arg debug)"/>
 			<arg name="pipeline" value="$(arg pipeline)" />
-			
-	  	</include>
-	</group> -->
+		</include>
+	</group>
+
+	<!-- Moving COB4 to its home state -->
+	<node pkg="test_cob4_common_bringup" type="cob4_moveit_home" name="cob4_moveit_home" output="screen" />
+
+	<!-- Teleop included for convenience -->
+	<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen" launch-prefix="xterm -e">
+		<remap from="/cmd_vel" to="/base/twist_controller/command"/>
+	</node>
+
 
 </launch>
