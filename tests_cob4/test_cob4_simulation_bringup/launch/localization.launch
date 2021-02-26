@@ -11,7 +11,7 @@
 	<arg name="world_name" default="test_zone_pick_place.sdf" /> <!-- test_zone.sdf, test_zone_pick_place.sdf -->
 	<arg name="moveit" default="true"/>
 	<arg name="output" default="log"/>
-	<arg name="map_file" default="simulation_map_gmapping"/>
+	<!-- <arg name="map_file" default="simulation_map_gmapping"/> -->
 
     <!-- next three arguments are not used yet -->
 	<arg name="allow_active_sensing" default="true"/>
@@ -24,6 +24,10 @@
 	<arg name="x_pose" default="0.0"/>
 	<arg name="y_pose" default="0.0"/>
 
+	<!-- pre-made map for localization -->
+	<arg name="map_file" default="$(find test_cob4_simulation_bringup)/maps/map.yaml"/>
+  	<!-- Map server -->
+  	<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
   	
   	<!-- Start Gazebo simulation -->
   	<include file="$(find cob_bringup_sim)/launch/robot.launch" >
@@ -33,13 +37,49 @@
         <arg name="initial_config" value="-x $(arg x_pose) -y $(arg y_pose)" />
   	</include>
 
-	<!-- 2d mapping with gmapping -->
-	<!-- <include file="$(find cob_mapping_slam)/launch/2dslam.xml"/> -->
-
-	
+	  <!-- start amcl -->
+	<node pkg="amcl" type="amcl" name="amcl">
+		<remap from="scan" to="scan_unified" />
+		<param name="odom_model_type" value="omni"/>
+		<param name="transform_tolerance" value="0.2" />
+		<param name="gui_publish_rate" value="-1.0"/>
+		<param name="laser_max_beams" value="180"/>
+		<param name="laser_max_range" value="10"/>
+		<param name="min_particles" value="100"/>
+		<param name="max_particles" value="5000"/>
+		<!--param name="update_min_a" value="1.0"/-->
+		<param name="kld_err" value="0.01"/>
+		<param name="kld_z" value="0.99"/>
+		<param name="odom_alpha1" value="0.1"/>
+		<param name="odom_alpha2" value="0.1"/>
+		<!-- translation std dev, m -->
+		<param name="odom_alpha3" value="0.1"/>
+		<param name="odom_alpha4" value="0.1"/>
+		<param name="odom_alpha5" value="0.1"/>
+		<param name="laser_z_hit" value="0.95"/>
+		<param name="laser_z_short" value="0.1"/>
+		<param name="laser_z_max" value="0.05"/>
+		<param name="laser_z_rand" value="0.05"/>
+		<param name="laser_sigma_hit" value="0.2"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_model_type" value="likelihood_field"/>
+		<!-- <param name="laser_model_type" value="beam"/> -->
+		<param name="laser_likelihood_max_dist" value="2.0"/>
+		<param name="update_min_d" value="0.2"/>
+		<param name="update_min_a" value="0.2"/>
+		<param name="odom_frame_id" value="odom_combined"/>
+		<param name="base_frame_id" value="base_footprint"/>
+		<param name="global_frame_id" value="map"/>
+		<param name="resample_interval" value="2"/>
+		<param name="transform_tolerance" value="0.1"/>
+		<param name="recovery_alpha_slow" value="0.0"/>
+		<param name="recovery_alpha_fast" value="0.0"/>
+	</node>
 
 	<!-- Including RVIZ to monitor mapping -->
-	<include file="$(find test_cob4_desktop_bringup)/launch/rviz.launch"/>
+	<include file="$(find test_cob4_desktop_bringup)/launch/rviz.launch">
+		<arg name="config" value="amcl" />
+	</include>
 
 	<!-- MoveIt! -->
 	<group if="$(arg moveit)">
