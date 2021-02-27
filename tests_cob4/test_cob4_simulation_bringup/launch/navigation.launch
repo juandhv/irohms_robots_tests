@@ -1,24 +1,27 @@
 <launch>
-	<arg name="robot" default="cob4-8" /> <!-- cob4-5, cob4-7, cob4-8, cob4-10, cob4-13, cob4-16, cob4-24 -->
-	<arg name="robot_env" default="empty" /> <!-- empty, ipa-apartment, ipa-kitchen, ipa-office -->
+	<arg name="robot" default="cob4-8" />
+	<!-- cob4-5, cob4-7, cob4-8, cob4-10, cob4-13, cob4-16, cob4-24 -->
+	<arg name="robot_env" default="empty" />
+	<!-- empty, ipa-apartment, ipa-kitchen, ipa-office -->
 	<arg name="pkg_hardware_config" default="$(find cob_hardware_config)"/>
 	<arg name="pkg_moveit_config" default="$(find cob_moveit_config)"/>
 	<arg name="debug" default="false"/>
 	<arg name="pipeline" default="ompl" />
 	<arg name="scene_objects" default="pick_place" />
-	
+
 	<arg name="mapping" default="true" />
-	<arg name="world_name" default="test_zone_pick_place.sdf" /> <!-- test_zone.sdf, test_zone_pick_place.sdf -->
+	<arg name="world_name" default="test_zone_pick_place.sdf" />
+	<!-- test_zone.sdf, test_zone_pick_place.sdf -->
 	<arg name="moveit" default="true"/>
 	<arg name="output" default="log"/>
 	<!-- <arg name="map_file" default="simulation_map_gmapping"/> -->
 
-    <!-- next three arguments are not used yet -->
+	<!-- next three arguments are not used yet -->
 	<arg name="allow_active_sensing" default="true"/>
 	<arg name="vicon_bridge_params_file" default="localization_tests.yaml"/>
 	<arg name="prepare_robot_pick_place" default="true" />
-    
-    <arg name="gui" default="true"/>
+
+	<arg name="gui" default="true"/>
 
 	<!-- initial position of robot for localization testing -->
 	<arg name="x_pose" default="0.0"/>
@@ -26,18 +29,18 @@
 
 	<!-- pre-made map for localization -->
 	<arg name="map_file" default="$(find test_cob4_simulation_bringup)/maps/map.yaml"/>
-  	<!-- Map server -->
-  	<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
-  	
-  	<!-- Start Gazebo simulation -->
-  	<include file="$(find cob_bringup_sim)/launch/robot.launch" >
-  		<arg name="robot" value="$(arg robot)" />
-  		<arg name="robot_env" value="$(arg robot_env)" />
-  		<arg name="gui" value="$(arg gui)" />
-        <arg name="initial_config" value="-x $(arg x_pose) -y $(arg y_pose)" />
-  	</include>
+	<!-- Map server -->
+	<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
-	  <!-- start amcl -->
+	<!-- Start Gazebo simulation -->
+	<include file="$(find cob_bringup_sim)/launch/robot.launch">
+		<arg name="robot" value="$(arg robot)" />
+		<arg name="robot_env" value="$(arg robot_env)" />
+		<arg name="gui" value="$(arg gui)" />
+		<arg name="initial_config" value="-x $(arg x_pose) -y $(arg y_pose)" />
+	</include>
+
+	<!-- start amcl -->
 	<node pkg="amcl" type="amcl" name="amcl">
 		<remap from="scan" to="scan_unified" />
 		<param name="odom_model_type" value="omni"/>
@@ -83,7 +86,7 @@
 
 	<!-- MoveIt! -->
 	<group if="$(arg moveit)">
-		<include file="$(find cob_moveit_bringup)/launch/move_group.launch" >
+		<include file="$(find cob_moveit_bringup)/launch/move_group.launch">
 			<arg name="robot" value="$(arg robot)" />
 			<arg name="pkg_hardware_config" value="$(arg pkg_hardware_config)"/>
 			<arg name="pkg_moveit_config" value="$(arg pkg_moveit_config)"/>
@@ -105,13 +108,18 @@
 		<remap from="/cmd_vel" to="/base/twist_controller/command"/>
 	</node>
 
-    <arg name="pkg_nav_config" default="$(find cob_navigation_config)"/>
+	<arg name="pkg_nav_config" default="$(find cob_navigation_config)"/>
 
-    <!--- Run move base -->
-    <include file="$(find cob_navigation_global)/launch/2dnav_ros_dwa.xml" >
-        <arg name="robot" value="$(arg robot)"/>
-        <arg name="pkg_nav_config" value="$(arg pkg_nav_config)"/>
-    </include>
+	<!--- Run move base -->
+	<include file="$(find cob_navigation_global)/launch/2dnav_ros_dwa.xml">
+		<arg name="robot" value="$(arg robot)"/>
+		<arg name="pkg_nav_config" value="$(arg pkg_nav_config)"/>
+	</include>
+
+	<!-- gazebo physics parameters changed for faster simulation -->
+	<node name="gazebo_physics_config" pkg="dynamic_reconfigure" type="dynparam" args="set_from_parameters gazebo">
+		<rosparam file="$(find test_cob4_simulation_bringup)/param/physics_gazebo.yaml" command="load" />
+	</node>
 
 
 </launch>
