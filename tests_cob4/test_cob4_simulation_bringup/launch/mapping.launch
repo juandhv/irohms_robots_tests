@@ -55,10 +55,10 @@
 	<!-- Moving COB4 to its home state -->
 	<node pkg="test_cob4_common_bringup" type="cob4_moveit_home" name="cob4_moveit_home" output="screen" />
 
-	<!-- Teleop included for convenience -->
+	<!-- Teleop included for convenience
 	<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen" launch-prefix="xterm -e">
 		<remap from="/cmd_vel" to="/base/twist_controller/command"/>
-	</node>
+	</node> -->
 
 	<!-- gazebo physics parameters changed for faster simulation -->
 	<node name="gazebo_physics_config" pkg="dynamic_reconfigure" type="dynparam" args="set_from_parameters gazebo">
