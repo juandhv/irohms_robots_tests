@@ -108,7 +108,7 @@ Once the simulation is running completely, use the `2D Pose Estimate` tool locat
 
 Then start moving the robot around using the teleop window, eventually you will see the red particles around the robot converging to a single point in RViz meaning it has localized successfully.
 
-## 3. Navigation tests:
+## 4. Navigation tests:
 
 To test the basic `move_base` functionalities with Care-O-Bot4, you should in separate terminals:
 
