@@ -1,0 +1,18 @@
+<package format="2">
+  <name>test_iiwa_simulation_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_iiwa_simulation_bringup package</description>
+
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+
+  <!-- Kuka iiwa -->
+  <depend>iiwa_gazebo</depend>
+  <depend>ros-iiwa_control</depend>
+
+</package>
