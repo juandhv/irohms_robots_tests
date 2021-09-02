@@ -13,6 +13,8 @@
 
   <!-- Kuka iiwa -->
   <depend>iiwa_gazebo</depend>
-  <depend>ros-iiwa_control</depend>
+  
+  <!-- Test iiwa -->
+  <depend>test_iiwa_common_bringup</depend>
 
 </package>

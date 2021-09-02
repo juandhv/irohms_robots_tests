@@ -11,9 +11,9 @@
   
   <depend>roscpp</depend>
 
-  <!-- Cob4 -->
-  <depend>cob_navigation</depend>
-  <depend>cob_moveit_bringup</depend>
+  <!-- Kuka iiwa -->
+  <depend>iiwa_moveit</depend>
+  <depend>iiwa_control</depend>
   <!--depend>cob_pick_place_action</depend-->
  
   <!-- World model 
@@ -26,9 +26,9 @@
   <!-- Navigation
   <depend>robot_localization</depend>  -->
   
-  <!-- Moveit  -->
+  <!-- Moveit 
   <depend>moveit_core</depend>
   <depend>moveit_ros_planning_interface</depend>
-  <depend>moveit_ros_perception</depend>
+  <depend>moveit_ros_perception</depend>  -->
 
 </package>

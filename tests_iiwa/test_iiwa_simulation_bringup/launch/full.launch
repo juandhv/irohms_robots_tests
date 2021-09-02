@@ -1,0 +1,17 @@
+<launch>
+	<arg name="model" default="iiwa14" />
+
+	<arg name="moveit" default="false"/>
+
+	<!-- Start Gazebo simulation -->
+	<include file="$(find iiwa_gazebo)/launch/iiwa_gazebo.launch">
+		<arg name="model" value="$(arg model)" />
+	</include>
+
+	<!-- MoveIt! -->
+	<group if="$(arg moveit)">
+		<include file="$(find iiwa_moveit)/launch/move_group.launch">
+			<arg name="model" value="$(arg model)" />
+		</include>
+	</group>
+</launch>
