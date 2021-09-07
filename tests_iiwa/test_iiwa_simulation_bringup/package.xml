@@ -16,5 +16,6 @@
   
   <!-- Test iiwa -->
   <depend>test_iiwa_common_bringup</depend>
+  <depend>test_iiwa_desktop_bringup</depend>
 
 </package>

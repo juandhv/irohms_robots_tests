@@ -1,17 +1,40 @@
 <launch>
-	<arg name="model" default="iiwa14" />
-
-	<arg name="moveit" default="false"/>
-
-	<!-- Start Gazebo simulation -->
-	<include file="$(find iiwa_gazebo)/launch/iiwa_gazebo.launch">
-		<arg name="model" value="$(arg model)" />
-	</include>
-
-	<!-- MoveIt! -->
-	<group if="$(arg moveit)">
-		<include file="$(find iiwa_moveit)/launch/move_group.launch">
-			<arg name="model" value="$(arg model)" />
-		</include>
-	</group>
+    <!-- The planning and execution components of MoveIt! configured to run -->
+    <!-- using the ROS-Industrial interface. -->
+    
+    <!-- | 		PARAMETERS  		| -->
+    <!-- hardware_interface to use : PositionJointInterface, EffortJointInterface, VelocityJointInterface. -->
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    <!-- The is gonna have its nodes/topics under a namespace with the same name. -->
+    <arg name="robot_name" default="iiwa"/>
+    <!-- Model of the iiwa to use : iiwa7, iiwa14 -->
+    <arg name="model" default="iiwa14" />
+    <arg name="rviz" default="true" />
+	<!-- Use move_group -->
+    <arg name="moveit" default="true" />
+    
+    <remap from="/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" 
+           to="/$(arg robot_name)/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" />
+    <remap from="robot_description" to="/$(arg robot_name)/robot_description" /> 
+    <remap from="/get_planning_scene" to="/$(arg robot_name)/get_planning_scene" /> 
+    
+    <!-- Run the robot within a Gazebo simulation. -->
+    <!-- Load Gazebo with given values -->
+    <include file="$(find iiwa_gazebo)/launch/iiwa_gazebo.launch">
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+        <arg name="robot_name" value="$(arg robot_name)" />
+        <arg name="model" value="$(arg model)"/>
+    </include>
+    
+    <!-- Load move_group -->
+    <group ns="$(arg robot_name)" if="$(arg moveit)">
+        <include file="$(find iiwa_moveit)/launch/move_group.launch">
+            <arg name="publish_monitored_planning_scene" value="true" />
+            <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+            <arg name="robot_name" value="$(arg robot_name)"/>
+            <arg name="model" value="$(arg model)" />
+        </include>
+    </group>
+    
+    <include if="$(arg rviz)" file="$(find test_iiwa_desktop_bringup)/launch/rviz.launch"/>
 </launch>
