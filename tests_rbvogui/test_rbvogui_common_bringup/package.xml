@@ -15,13 +15,13 @@
   <depend>joint_read_command_controller</depend>
 
   <!-- rbvogui_common -->
-  <depend>rbvogui_common</depend>
   <depend>rbvogui_control</depend>
   <depend>rbvogui_description</depend>
   <depend>rbvogui_localization</depend>
   <depend>rbvogui_navigation</depend>
   <depend>rbvogui_pad</depend>
   <depend>rbvogui_robot_local_control</depend>
+  <depend>rbvogui_common</depend>
   
   <depend>rbvogui_moveit_ur10</depend>
   <depend>rbvogui_xl_2ur10_e_moveit</depend>
