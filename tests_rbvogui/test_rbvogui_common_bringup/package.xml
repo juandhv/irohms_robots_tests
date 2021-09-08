@@ -1,0 +1,44 @@
+<package format="2">
+  <name>test_rbvogui_common_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_rbvogui_common_bringup package</description>
+
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  
+  <!-- Robotnik -->
+  <depend>joint_read_command_controller</depend>
+
+  <!-- rbvogui_common -->
+  <depend>rbvogui_common</depend>
+  <depend>rbvogui_control</depend>
+  <depend>rbvogui_description</depend>
+  <depend>rbvogui_localization</depend>
+  <depend>rbvogui_navigation</depend>
+  <depend>rbvogui_pad</depend>
+  <depend>rbvogui_robot_local_control</depend>
+  
+  <depend>rbvogui_moveit_ur10</depend>
+  <depend>rbvogui_xl_2ur10_e_moveit</depend>
+ 
+  <!-- World model 
+  <depend>map_server</depend>
+  <depend>amcl</depend>
+  <depend>gmapping</depend>
+  <depend>octomap</depend>
+  <depend>octomap_rviz_plugins</depend> -->
+
+  <!-- Navigation
+  <depend>robot_localization</depend>  -->
+  
+  <!-- Moveit 
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_perception</depend>  -->
+
+</package>

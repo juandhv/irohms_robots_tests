@@ -1,0 +1,26 @@
+<package format="2">
+  <name>test_rbvogui_simulation_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_rbvogui_simulation_bringup package</description>
+
+  <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <depend>roscpp</depend>
+  
+  <!-- Robotnik velodyne_simulator -->
+  <depend>velodyne_description</depend>
+  <depend>velodyne_gazebo_plugins</depend>
+  
+  <!-- rbvogui_sim -->
+  <depend>rbvogui_gazebo</depend>
+  <depend>rbvogui_sim_bringup</depend>
+  
+  <!-- Test rbvogui -->
+  <depend>test_rbvogui_common_bringup</depend>
+  <depend>test_rbvogui_desktop_bringup</depend>
+
+</package>
