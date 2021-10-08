@@ -31,4 +31,8 @@
   <depend>moveit_ros_planning_interface</depend>
   <depend>moveit_ros_perception</depend>
 
+  <!-- Navigation -->
+  <depend>teleop_twist_keyboard</depend>
+
+
 </package>
