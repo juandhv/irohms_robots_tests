@@ -13,6 +13,10 @@
   
   <!-- Robotnik -->
   <depend>joint_read_command_controller</depend>
+  <depend>robotnik_pad</depend>
+  <depend>robotnik_pad_msgs</depend>
+  <depend>robotnik_pad_plugins</depend>
+  <depend>ewellix_description</depend>
 
   <!-- rbvogui_common -->
   <depend>rbvogui_control</depend>
