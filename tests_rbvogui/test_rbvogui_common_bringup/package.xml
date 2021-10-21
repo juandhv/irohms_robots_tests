@@ -29,7 +29,10 @@
   
   <depend>rbvogui_moveit_ur10</depend>
   <depend>rbvogui_xl_2ur10_e_moveit</depend>
- 
+
+  <!-- universal_robots -->
+  <depend>ur_description</depend>
+
   <!-- World model 
   <depend>map_server</depend>
   <depend>amcl</depend>
