@@ -70,5 +70,10 @@
 
     <node name="laser_publisher" pkg="pepper_gazebo_plugin" type="laser_publisher.py"/>
 
+    <!-- gazebo physics parameters changed for faster simulation -->
+    <!-- <node name="gazebo_physics_config" pkg="dynamic_reconfigure" type="dynparam" args="set_from_parameters gazebo">
+        <rosparam file="$(find test_pepper_simulation_bringup)/param/physics_gazebo.yaml" command="load" />
+    </node> -->
+
 
 </launch>
