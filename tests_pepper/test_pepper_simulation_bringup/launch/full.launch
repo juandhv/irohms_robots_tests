@@ -1,0 +1,74 @@
+<launch>
+
+    <arg name="launch_control_trajectory_all" default="true"/>
+
+    <arg name="moveit" default="false"/>
+    <arg name="mapping" default="false" />
+    <arg name="localization" default="false" />
+    <arg name="navigation" default="false" />
+
+    <arg name="pkg_gazebo_worlds" default="$(find cob_gazebo_worlds)"/>
+    <arg name="pkg_env_config" default="$(find cob_default_env_config)"/>
+    <arg name="robot_env" default="empty" />
+    <arg name="world_name" default="test_zone_pick_place.sdf" />
+
+
+    <arg name="debug" default="false" />
+    <arg name="headless" default="false" />
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+
+
+    <arg name="x_pos" default="0"/>
+    <arg name="y_pos" default="0"/>
+
+    <!-- COB world spawn -->
+    <env name="GAZEBO_MODEL_PATH" value="$(arg pkg_gazebo_worlds)/Media/models:$(optenv GAZEBO_MODEL_PATH)"/>
+
+    <!-- upload default configuration parameters -->
+    <include file="$(arg pkg_env_config)/upload_navigation_goals.launch">
+        <arg name="robot_env" value="$(arg robot_env)" />
+    </include>
+
+    <include file="$(arg pkg_env_config)/upload_object_locations.launch">
+        <arg name="robot_env" value="$(arg robot_env)" />
+    </include>
+
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="gui" value="$(arg gui)" />
+    </include>
+
+    <!-- spawn environment and start environment-specific nodes -->
+    <include file="$(arg pkg_gazebo_worlds)/launch/$(arg robot_env).xml">
+        <arg name="robot_env" value="$(arg robot_env)" />
+    </include>
+
+
+    <!-- Load the URDF Model -->
+    <include file="$(find pepper_description)/launch/pepper_upload_CPU.launch" />
+
+    <!-- Call Pepper Robot Trajectory Controller -->
+
+    <include file="$(find pepper_control)/launch/pepper_control_trajectory.launch" unless="$(arg launch_control_trajectory_all)"/>
+    <include file="$(find pepper_control)/launch/pepper_control_trajectory_all.launch" if="$(arg launch_control_trajectory_all)"/>
+    <!--
+  <include file="$(find pepper_control)/launch/pepper_control_position.launch"/>
+-->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+    <!-- Spawn a robot into Gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x_pos) -y $(arg x_pos) -z 0.05 -model pepper_robot" />
+
+    <node name="lower_arms" pkg="pepper_gazebo_plugin" type="arms_down.sh" output="screen" />
+
+    <node name="laser_publisher" pkg="pepper_gazebo_plugin" type="laser_publisher.py"/>
+
+
+</launch>
