@@ -1,8 +1,6 @@
+<?xml version="1.0"?>
 <launch>
-    <arg name="model" default="burger" doc="model type [burger, waffle, waffle_pi]"/>
-    <param name="model" value="$(arg model)"/>
-
-    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard" output="screen">
-        <remap from="cmd_vel" to="/pepper/cmd_vel" />
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" output="screen">
+        <remap from="/cmd_vel" to="/pepper/cmd_vel"/>
     </node>
 </launch>
