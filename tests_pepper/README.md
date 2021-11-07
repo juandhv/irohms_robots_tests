@@ -1,4 +1,4 @@
-# IROHMS Lab Demos (Pepper 4). How to Use:
+# IROHMS Lab Demos (Pepper). How to Use:
 
 These packages can be installed through [irohms-env](https://github.com/juandhv/tue-env).
 
