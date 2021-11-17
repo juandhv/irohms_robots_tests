@@ -2,7 +2,7 @@
 
 These packages can be installed through [irohms-env](https://github.com/juandhv/tue-env).
 
-## 0. Installing (checking out) pepper simulation tests
+## 0. Installing (checking out) Pepper simulation tests
 
 Before installing any new package, update your installed packages:
 
@@ -38,11 +38,17 @@ To start RViz:
 test-pepper-desktop-rviz
 ```
 
-Once the simulation is running, wait till the robot puts its right arm at the front and the left arm behind before moving the base. To run the demo with MoveIt! functionalities:
+Once the simulation is running, check and activate the `MotionPlanning` display at the left of RViz. Use the visuals from RViz to move the arms to a desired position as below:
+
+![moveit visuals](https://i.imgur.com/C6uqNzE.png)
+
+Afterwards use the `Plan` and `Execute` buttons to move the Pepper's arms.
+
+<!-- Once the simulation is running, wait till the robot puts its right arm at the front and the left arm behind before moving the base. To run the demo with MoveIt! functionalities:
 
 ```bash
 rosrun test_pepper_common_bringup pepper_moveit_demo
-```
+``` -->
 
 ## 2. Mapping tests:
 
@@ -70,7 +76,7 @@ test-pepper-desktop-base-teleop
 
 Start moving the robot around using this terminal and the map will start appearing in the RViz window.
 
-Once all the mapping procedure is finished or it is desired to save the map, open a new terminal and run the following command without closing the simulation:
+Once all the mapping procedure is finished or it is desired to save the map, open a new terminal in a specific directory and run the following command without closing the simulation:
 
 ```bash
 rosrun map_server map_saver -f {map_name}
@@ -93,10 +99,8 @@ test-pepper-simulation-full robot_env:=ipa-apartment moveit:=true localization:=
 To start RViz:
 
 ```bash
-test-pepper-desktop-rviz config:=amcl
+test-pepper-desktop-rviz
 ```
-
-> Note: A different configuration of RViz is used to see particle cloud from `amcl`.
 
 To teleoperate and move the base:
 
@@ -123,7 +127,7 @@ test-pepper-simulation-full robot_env:=ipa-apartment moveit:=true localization:=
 To start RViz:
 
 ```bash
-test-pepper-desktop-rviz config:=amcl
+test-pepper-desktop-rviz
 ```
 
 To teleoperate and move the base:
