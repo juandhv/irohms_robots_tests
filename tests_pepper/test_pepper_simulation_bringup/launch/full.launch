@@ -14,13 +14,11 @@
     <arg name="robot_env" default="empty" />
     <arg name="world_name" default="test_zone_pick_place.sdf" />
 
-
     <arg name="debug" default="false" />
     <arg name="headless" default="false" />
     <arg name="paused" default="false" />
     <arg name="use_sim_time" default="true" />
     <arg name="gui" default="true" />
-
 
     <arg name="x_pos" default="0" />
     <arg name="y_pos" default="0" />
@@ -37,7 +35,6 @@
         <arg name="robot_env" value="$(arg robot_env)" />
     </include>
 
-
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(arg world_name)" />
         <arg name="debug" value="$(arg debug)" />
@@ -47,46 +44,37 @@
         <arg name="gui" value="$(arg gui)" />
     </include>
 
+    <!-- Spawn a robot into Gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model pepper_robot -x $(arg x_pos) -y $(arg y_pos) -z 0.05" />
+
     <!-- spawn environment and start environment-specific nodes -->
     <include file="$(arg pkg_gazebo_worlds)/launch/$(arg robot_env).xml">
         <arg name="robot_env" value="$(arg robot_env)" />
     </include>
 
-
     <!-- Load the URDF Model -->
-
     <include file="$(find pepper_description)/launch/pepper_upload_CPU.launch" />
 
     <!-- Call Pepper Robot Trajectory Controller -->
-
     <include file="$(find pepper_control)/launch/pepper_control_trajectory.launch" unless="$(arg launch_control_trajectory_all)" />
     <include file="$(find pepper_control)/launch/pepper_control_trajectory_all.launch" if="$(arg launch_control_trajectory_all)" />
-
-    <!--
-  <include file="$(find pepper_control)/launch/pepper_control_position.launch"/>
--->
 
     <!-- Given the published joint states, publish tf for the robot links -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
 
-
-    <!-- Spawn a robot into Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x_pos) -y $(arg x_pos) -z 0.05 -model pepper_robot" />
 
     <!-- <node name="lower_arms" pkg="pepper_gazebo_plugin" type="arms_down.sh" output="screen" /> -->
 
     <node name="laser_publisher" pkg="pepper_gazebo_plugin" type="laser_publisher.py" />
 
     <!-- gazebo physics parameters changed for faster simulation -->
+    <!-- this is chaotic with the Pepper, works fine with COB4 -->
     <!-- <node name="gazebo_physics_config" pkg="dynamic_reconfigure" type="dynparam" args="set_from_parameters gazebo">
         <rosparam file="$(find test_pepper_simulation_bringup)/param/physics_gazebo.yaml" command="load" />
     </node> -->
 
     <!-- move it config -->
     <group if="$(arg moveit)">
-
-        <arg name="config_filename" default="$(find pepper_moveit_config)/launch/moveit.rviz" />
-
         <arg name="robot_description" default="robot_description" />
         <param name="$(arg robot_description)_semantic" textfile="$(find pepper_moveit_config)/config/JulietteY20MP.srdf" />
 
@@ -108,19 +96,17 @@
             <arg name="debug" value="$(arg debug)" />
         </include>
 
-        <!-- Run Rviz and load the default config to see the state of the move_group node -->
-
-        <include file="$(find pepper_moveit_config)/launch/moveit_rviz.launch">
-            <arg name="config" value="true" />
-            <arg name="config_filename" value="$(arg config_filename)" />
-            <arg name="debug" value="$(arg debug)" />
-        </include>
-
+        <group unless="$(arg mapping)">
+            <group unless="$(arg localization)">
+                <group unless="$(arg navigation)">
+                    <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 world odom 100" />
+                </group>
+            </group>
+        </group>
     </group>
 
     <!-- Mapping! -->
     <group if="$(arg mapping)">
-
         <arg name="unified_laser_scan" default="false" />
 
         <!-- dynamic map generation from unified scan -->
@@ -135,12 +121,12 @@
             <param name="odom_frame" type="string" value="odom" />
         </node>
 
+        <!-- Not using Cartographer because of an odom shifting problem -->
         <!-- cartographer_node -->
         <!-- <node pkg="cartographer_ros" type="cartographer_node" name="cartographer_node" args="-configuration_directory $(find test_pepper_simulation_bringup)/config
               -configuration_basename $(arg configuration_basename)" output="screen">
             <remap from="scan" to="/pepper/laser_2" />
         </node> -->
-
         <!-- cartographer_occupancy_grid_node -->
         <!-- <node pkg="cartographer_ros" type="cartographer_occupancy_grid_node" name="cartographer_occupancy_grid_node" args="-resolution 0.05" /> -->
     </group>
@@ -148,7 +134,6 @@
     <!-- Localization is only possible when Mapping is set to false -->
     <group unless="$(arg mapping)">
         <group if="$(arg localization)">
-
             <!-- pre-made map for localization -->
             <arg name="map_file" default="$(find test_pepper_simulation_bringup)/maps/map.yaml" />
             <!-- Map server -->
@@ -222,14 +207,10 @@
                     <!--- load planner parameters -->
                     <rosparam file="$(arg pkg_nav_config)/config/base_local_planner_params.yaml" command="load" />
                     <rosparam file="$(arg pkg_nav_config)/config/dwa_local_planner.yaml" command="load" ns="DWAPlannerROS" />
-
                 </node>
-
             </group>
         </group>
     </group>
 
     <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_0" args="0 0 0 0 0 0 odom base_link 100" />
-
-
 </launch>
