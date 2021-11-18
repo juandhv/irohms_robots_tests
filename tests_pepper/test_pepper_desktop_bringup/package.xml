@@ -13,7 +13,6 @@
   <!-- Test Pepper -->
   <depend>test_pepper_common_bringup</depend>
 
-  <export>
-
-  </export>
+  <depend>rqt_gui</depend>
+  <depend>rviz</depend>
 </package>

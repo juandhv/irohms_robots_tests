@@ -23,6 +23,7 @@ find_package(catkin REQUIRED
 )
 endif()
 
+find_package(Boost REQUIRED system filesystem date_time thread)
 
 catkin_package(
     CATKIN_DEPENDS

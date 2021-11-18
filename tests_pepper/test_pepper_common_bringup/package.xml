@@ -10,7 +10,32 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <export>
+  <depend>roscpp</depend>
 
-  </export>
+  <!-- pepper sim packages -->
+  <depend>camera_info_manager_py</depend>
+  <depend>ddynamic_reconfigure_python</depend>
+  <depend>humanoid_nav_msgs</depend>
+  <depend>naoqi_bridge_msgs</depend>
+  <depend>naoqi_driver</depend>
+  <depend>naoqi_driver_py</depend>
+  <depend>naoqi_pose</depend>
+  <depend>naoqi_sensors_py</depend>
+  <depend>pepper_bringup</depend>
+  <depend>pepper_control</depend>
+  <depend>pepper_description</depend>
+  <depend>pepper_gazebo_plugin</depend>
+  <depend>pepper_moveit_config</depend>
+  <depend>pepper_robot</depend>
+  <depend>pepper_sensors_py</depend>
+  <depend>gazebo_model_velocity_plugin</depend>
+
+
+  <!-- Moveit  -->
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_perception</depend>
+
+  <!-- Navigation -->
+  <depend>teleop_twist_keyboard</depend>
 </package>
