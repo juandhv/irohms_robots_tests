@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>test_pepper_common_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_pepper_common_bringup package</description>
+
+  <maintainer email="sasilva1998@gmail.com">sasm</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+
+  <!-- pepper sim packages -->
+  <depend>camera_info_manager_py</depend>
+  <depend>ddynamic_reconfigure_python</depend>
+  <depend>humanoid_nav_msgs</depend>
+  <depend>naoqi_bridge_msgs</depend>
+  <depend>naoqi_driver</depend>
+  <depend>naoqi_driver_py</depend>
+  <depend>naoqi_pose</depend>
+  <depend>naoqi_sensors_py</depend>
+  <depend>pepper_bringup</depend>
+  <depend>pepper_control</depend>
+  <depend>pepper_description</depend>
+  <depend>pepper_gazebo_plugin</depend>
+  <depend>pepper_moveit_config</depend>
+  <depend>pepper_robot</depend>
+  <depend>pepper_sensors_py</depend>
+  <depend>gazebo_model_velocity_plugin</depend>
+
+
+  <!-- Moveit  -->
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_perception</depend>
+
+  <!-- Navigation -->
+  <depend>teleop_twist_keyboard</depend>
+</package>

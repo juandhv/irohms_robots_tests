@@ -1,0 +1,11 @@
+<launch>
+
+    <arg name="bringup_package_path" value="$(find test_pepper_common_bringup)" />
+    <arg name="config" default="default" />
+    <arg name="output" default="screen" />
+    <arg name="respawn" default="false" />
+
+    <!-- RVIZ GUI -->
+    <node respawn="$(arg respawn)" name="$(anon rviz)" pkg="rviz" type="rviz" args="-d $(arg bringup_package_path)/parameters/tools/rviz/$(arg config).rviz" output="$(arg output)" />
+
+</launch>

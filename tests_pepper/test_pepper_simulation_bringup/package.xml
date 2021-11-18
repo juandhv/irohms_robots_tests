@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>test_pepper_simulation_bringup</name>
+  <version>0.0.0</version>
+  <description>The test_pepper_simulation_bringup package</description>
+
+  <maintainer email="sasilva1998@gmail.com">sasm</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Pepper dependencies -->
+  <depend>pepper_description</depend>
+
+  <!-- Test Pepper -->
+  <depend>test_pepper_common_bringup</depend>
+  <depend>test_pepper_desktop_bringup</depend>
+
+  <export>
+
+  </export>
+</package>
