@@ -7,7 +7,6 @@
 
 // ROS stuff
 #include <ros/ros.h>
-
 #include <eigen_conversions/eigen_msg.h>
 #include <tf_conversions/tf_eigen.h>
 
@@ -63,6 +62,7 @@ void Pepper::run()
 
     move_group_right.setPlannerId("RRTConnectkConfigDefault");
     move_group_left.setPlannerId("RRTConnectkConfigDefault");
+
     auto pcm = planning_scene_monitor::PlanningSceneMonitorPtr(
         new planning_scene_monitor::PlanningSceneMonitor("robot_description"));
     planning_scene_monitor::LockedPlanningSceneRO planning_scene(pcm);
@@ -88,28 +88,36 @@ void Pepper::run()
             // Pregrasp
             geometry_msgs::PoseStamped target_pose;
 
-            target_pose.pose.position.y = 0.0;
-            target_pose.pose.position.z = 0.6;
-            target_pose.header.frame_id = "base_footprint";
+            target_pose.header.frame_id = "base_link";
             if (arm.compare("right") == 0)
             {
-                target_pose.pose.position.x = 0.05;
-                target_pose.pose.position.y = -0.19;
-                target_pose.pose.position.z = 0.65;
-                target_pose.pose.orientation.x = 0.074;
-                target_pose.pose.orientation.y = 0.19;
-                target_pose.pose.orientation.z = -0.10;
-                target_pose.pose.orientation.w = 0.97;
+                target_pose.pose.position.x = -0.06;
+                target_pose.pose.position.y = -0.37;
+                target_pose.pose.position.z = 0.22;
+                target_pose.pose.orientation.x = -0.53;
+                target_pose.pose.orientation.y = 0.58;
+                target_pose.pose.orientation.z = -0.49;
+                target_pose.pose.orientation.w = -0.35;
+                move_group_right.setPoseReferenceFrame("base_link");
+                move_group_right.setGoalTolerance(0.25);
+                move_group_right.setGoalOrientationTolerance(0.25);
                 move_group_right.setPoseTarget(target_pose);
-                move_group_right.setGoalTolerance(0.05);
+                move_group_right.setApproximateJointValueTarget(target_pose, "r_wrist");
             }
             else
             {
-                target_pose.pose.position.x = 0.28;
-                target_pose.pose.position.y = 0.16;
-                target_pose.pose.position.z = 0.91;
-                target_pose.pose.orientation.w = 1;
+                target_pose.pose.position.x = -0.03;
+                target_pose.pose.position.y = 0.35;
+                target_pose.pose.position.z = 0.23;
+                target_pose.pose.orientation.x = 0.58;
+                target_pose.pose.orientation.y = 0.47;
+                target_pose.pose.orientation.z = 0.54;
+                target_pose.pose.orientation.w = -0.37;
+                move_group_left.setPoseReferenceFrame("base_link");
+                move_group_left.setGoalTolerance(0.25);
+                move_group_left.setGoalOrientationTolerance(0.25);
                 move_group_left.setPoseTarget(target_pose);
+                move_group_left.setApproximateJointValueTarget(target_pose, "l_wrist");
             }
 
             if (arm.compare("right") == 0)
