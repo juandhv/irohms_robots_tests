@@ -38,6 +38,10 @@ To start RViz:
 test-pepper-desktop-rviz
 ```
 
+Wait until the robot has put its arms down.
+
+## 1.1 Using RViz visuals:
+
 Once the simulation is running, check and activate the `MotionPlanning` display at the left of RViz. Use the visuals from RViz to move the arms to a desired position as below:
 
 ![moveit visuals](https://i.imgur.com/C6uqNzE.png)
@@ -49,6 +53,14 @@ Afterwards use the `Plan` and `Execute` buttons to move the Pepper's arms.
 ```bash
 rosrun test_pepper_common_bringup pepper_moveit_demo
 ``` -->
+
+## 1.2 Using C++ script
+
+Run the following command:
+
+```bash
+rosrun test_pepper_common_bringup pepper_moveit_demo
+```
 
 ## 2. Mapping tests:
 

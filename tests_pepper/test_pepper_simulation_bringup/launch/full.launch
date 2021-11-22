@@ -96,6 +96,9 @@
             <arg name="debug" value="$(arg debug)" />
         </include>
 
+        <!-- Moving Pepper to its home state -->
+        <node pkg="test_pepper_common_bringup" type="pepper_moveit_home" name="pepper_moveit_home" output="screen" />
+
         <group unless="$(arg mapping)">
             <group unless="$(arg localization)">
                 <group unless="$(arg navigation)">
