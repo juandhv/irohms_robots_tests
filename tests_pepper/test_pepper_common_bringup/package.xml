@@ -28,8 +28,8 @@
   <depend>pepper_moveit_config</depend>
   <!-- <depend>pepper_robot</depend> -->
   <depend>pepper_sensors_py</depend>
+  <depend>pepper_meshes</depend>
   <depend>gazebo_model_velocity_plugin</depend>
-
 
   <!-- Moveit  -->
   <depend>moveit_core</depend>
