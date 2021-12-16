@@ -38,4 +38,7 @@
 
   <!-- Navigation -->
   <depend>teleop_twist_keyboard</depend>
+
+  <!-- Others-->
+  <depend>tf_conversions</depend>
 </package>
