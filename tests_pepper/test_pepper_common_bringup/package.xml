@@ -41,4 +41,5 @@
 
   <!-- Others-->
   <depend>tf_conversions</depend>
+  <depend>tf2_sensor_msgs</depend>
 </package>
