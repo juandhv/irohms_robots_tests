@@ -1,40 +1,52 @@
+<?xml version="1.0"?>
 <launch>
-    <!-- The planning and execution components of MoveIt! configured to run -->
-    <!-- using the ROS-Industrial interface. -->
+
+    <!-- Simulator Configuration -->
+    <arg name="simulation_package" default="$(optenv SIMULATION_CONFIG_PACKAGE rbvogui_gazebo)"/>
+    <arg name="config_package" default="$(optenv CONFIG_PACKAGE rbvogui_gazebo)"/>
+    <arg name="sim_bringup_package" default="$(optenv SIM_BRINGUP_PACKAGE rbvogui_sim_bringup)"/>
+    <arg name="world_package" default="$(optenv WORLD_PACKAGE rbvogui_gazebo)"/> <!-- unused -->
+    <arg name="rviz_package" default="$(optenv RVIZ_PACKAGE rbvogui_gazebo)"/> <!-- unused -->
+    <arg name="pad_package" default="$(optenv PAD_PACKAGE robotnik_pad)"/> <!-- unused -->
     
-    <!-- | 		PARAMETERS  		| -->
-    <!-- hardware_interface to use : PositionJointInterface, EffortJointInterface, VelocityJointInterface. -->
-    <arg name="hardware_interface" default="PositionJointInterface"/>
-    <!-- The is gonna have its nodes/topics under a namespace with the same name. -->
-    <arg name="robot_name" default="iiwa"/>
-    <!-- Model of the iiwa to use : iiwa7, iiwa14 -->
-    <arg name="model" default="iiwa14" />
-    <arg name="rviz" default="true" />
-	<!-- Use move_group -->
-    <arg name="moveit" default="true" />
+    <!-- Robot Configuration -->
+    <arg name="robot_model" default="$(optenv ROBOT_MODEL rbvogui)"/>
+    <arg name="robot_xacro" default="$(optenv ROBOT_XACRO rbvogui_std_ur5_rg2.urdf.xacro)"/>
     
-    <remap from="/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" 
-           to="/$(arg robot_name)/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" />
-    <remap from="robot_description" to="/$(arg robot_name)/robot_description" /> 
-    <remap from="/get_planning_scene" to="/$(arg robot_name)/get_planning_scene" /> 
+    <!-- Arm Configuration -->
+    <arg name="launch_arm" default="$(optenv ROBOT_HAS_ARM true)"/>
+    <arg name="arm_manufacturer" default="$(optenv ROBOT_ARM_MANUFACTURER ur)"/>
+    <arg name="arm_model" default="$(optenv ROBOT_ARM_MODEL ur5)"/>
+    <arg name="moveit" default="true"/>
     
-    <!-- Run the robot within a Gazebo simulation. -->
-    <!-- Load Gazebo with given values -->
-    <include file="$(find iiwa_gazebo)/launch/iiwa_gazebo.launch">
-        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
-        <arg name="robot_name" value="$(arg robot_name)" />
-        <arg name="model" value="$(arg model)"/>
+    <!-- Gripper Configuration -->
+    <arg name="launch_gripper" default="$(optenv ROBOT_HAS_GRIPPER true)"/>
+    <arg name="gripper_manufacturer" default="$(optenv ROBOT_GRIPPER_MANUFACTURER onrobot)"/>
+    <arg name="gripper_model" default="$(optenv ROBOT_GRIPPER_MODEL rg2)"/>
+
+    <!-- Launch the rbvogui with ur5 arm -->
+    <include file="$(eval find(sim_bringup_package) + '/launch/rbvogui_complete.launch')">
+        <arg name="simulation_package" value="$(arg simulation_package)"/>
+        <arg name="config_package" value="$(arg config_package)"/>
+            
+        <arg name="robot_model" default="$(arg robot_model)"/>
+        <arg name="robot_xacro" default="$(arg robot_xacro)"/>
+        
+        <arg name="launch_arm" default="$(arg launch_arm)"/>
+        <arg name="arm_manufacturer" value="$(arg arm_manufacturer)"/>
+        <arg name="arm_model" value="$(arg arm_model)"/>
     </include>
     
-    <!-- Load move_group -->
-    <group ns="$(arg robot_name)" if="$(arg moveit)">
-        <include file="$(find iiwa_moveit)/launch/move_group.launch">
-            <arg name="publish_monitored_planning_scene" value="true" />
-            <arg name="hardware_interface" value="$(arg hardware_interface)"/>
-            <arg name="robot_name" value="$(arg robot_name)"/>
-            <arg name="model" value="$(arg model)" />
-        </include>
-    </group>
+    <!-- Moveit! for manipulating arm -->
+    <group ns="robot" if="$(arg moveit)">
     
-    <include if="$(arg rviz)" file="$(find test_iiwa_desktop_bringup)/launch/rviz.launch"/>
+    <include file="$(find rbvogui_ur5_rg2_moveit)/launch/demo.launch">
+        <arg name="use_rviz" value="false"/>
+    </include>
+    
+    <!-- Move rbvogui arm -->    
+    <node pkg="rbvogui_gazebo" type="move_arm_joint_by_joint.py" name="rbvogui_moveit_home" output="screen"/>
+    
+    </group>
+
 </launch>
