@@ -39,7 +39,11 @@
   <!-- Navigation -->
   <depend>teleop_twist_keyboard</depend>
 
+  <!-- gazebo worlds -->
+  <depend>cob_gazebo_worlds</depend>
+
   <!-- Others-->
   <depend>tf_conversions</depend>
   <depend>tf2_sensor_msgs</depend>
+
 </package>
