@@ -1,11 +1,11 @@
 <launch>
 
-    <arg name="bringup_package_path" value="$(find test_iiwa_common_bringup)" />
+    <arg name="bringup_package_path" value="$(find test_rbvogui_common_bringup)" />
     <arg name="config" default="default" />
     <arg name="output" default="screen" />
     <arg name="respawn" default="false" />
     <!-- The is gonna have its nodes/topics under a namespace with the same name. -->
-    <arg name="robot_name" default="iiwa"/>
+    <arg name="robot_name" default="$(optenv ROBOT_ID robot)"/>
     
     <!-- RVIZ GUI -->
     <group ns="$(arg robot_name)">
