@@ -16,6 +16,9 @@
     <!-- Simulation configuration -->
     <arg name="world" default="$(optenv ROBOT_SIM_GAZEBO_WORLD worlds/demo.world)" /> <!-- demo.world, rbvogui.world -->
     <arg name="world_file" default="$(eval find(world_package) + '/' + world)"/>
+  
+    <!-- Localization configuration -->
+    <arg name="map_file" default="demo/demo.yaml"/>
      
     <!-- Robot Configuration -->
     <arg name="robot_id" default="$(optenv ROBOT_ID robot)"/>
@@ -50,6 +53,8 @@
         
         <arg name="world" value="$(arg world)"/>
         <arg name="world_file" value="$(arg world_file)"/>
+        
+        <arg name="map_file" value="$(arg map_file)"/>
             
         <arg name="robot_model" default="$(arg robot_model)"/>
         <arg name="robot_xacro" default="$(arg robot_xacro)"/>

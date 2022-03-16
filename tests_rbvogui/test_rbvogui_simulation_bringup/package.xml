@@ -4,6 +4,7 @@
   <description>The test_rbvogui_simulation_bringup package</description>
 
   <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+  <maintainer email="AtibaS@cardiff.ac.uk">Samuelson T. Atiba</maintainer>
 
   <license>TODO</license>
 
@@ -11,7 +12,15 @@
   
   <depend>roscpp</depend>
   
+  <depend>robotnik_pad</depend>
+  <depend>teleop_panel</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>joint_read_command_controller</depend>
+  <depend>roboticsgroup_gazebo_plugins</depend>
+  <depend>rg2_gripper_common</depend>
+  
   <!-- Robotnik velodyne_simulator -->
+  <depend>velodyne_simulator</depend>
   <depend>velodyne_description</depend>
   <depend>velodyne_gazebo_plugins</depend>
   
@@ -19,8 +28,19 @@
   <depend>rbvogui_gazebo</depend>
   <depend>rbvogui_sim_bringup</depend>
   
+  <!-- rbvogui common -->
+  <depend>rbvogui_control</depend>
+  <depend>rbvogui_localization</depend>
+  <depend>rbvogui_navigation</depend>
+  <depend>rbvogui_robot_local_control</depend>
+  <depend>rbvogui_description</depend>
+  
+  <!-- universal robot -->
+  <depend>universal_robot</depend>
+  <depend>ur_description</depend>
+
   <!-- Test rbvogui -->
   <depend>test_rbvogui_common_bringup</depend>
   <depend>test_rbvogui_desktop_bringup</depend>
-
+  
 </package>
