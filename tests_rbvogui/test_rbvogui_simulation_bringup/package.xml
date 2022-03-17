@@ -24,6 +24,9 @@
   <depend>velodyne_description</depend>
   <depend>velodyne_gazebo_plugins</depend>
   
+  <!-- Laser merge tool -->
+  <depend>ira_laser_tools</depend>
+  
   <!-- rbvogui_sim -->
   <depend>rbvogui_gazebo</depend>
   <depend>rbvogui_sim_bringup</depend>
