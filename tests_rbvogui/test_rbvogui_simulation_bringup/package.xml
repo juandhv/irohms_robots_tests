@@ -20,7 +20,6 @@
   <depend>rg2_gripper_common</depend>
   
   <!-- Robotnik velodyne_simulator -->
-  <depend>velodyne_simulator</depend>
   <depend>velodyne_description</depend>
   <depend>velodyne_gazebo_plugins</depend>
   
