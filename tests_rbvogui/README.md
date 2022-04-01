@@ -49,7 +49,7 @@ Afterwards use the `Plan` and `Execute` buttons to move the VOGUI+'s arms.
 Run the following command:
 
 ```bash
-rosrun test_rbvogui_common_bringup rbvogui_moveit_demo.py
+ROS_NAMESPACE=robot rosrun test_rbvogui_common_bringup rbvogui_moveit_demo.py
 ```
 
 ## 2. Mapping tests:
@@ -73,7 +73,7 @@ Start moving the robot around using the teleop panel in Rviz and the map will st
 Once all the mapping procedure is finished or it is desired to save the map, open a new terminal in a specific directory and run the following command without closing the simulation:
 
 ```bash
-rosrun map_server map_saver -f {map_name}
+ROS_NAMESPACE=robot rosrun map_server map_saver -f {map_name}
 ```
 
 > Note: `{map_name}` should be replaced. This will save two files, a `.pgm` and a `.yaml`, both are needed so that the map can be used afterwards.
