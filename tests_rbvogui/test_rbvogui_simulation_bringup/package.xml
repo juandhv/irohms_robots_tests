@@ -37,9 +37,8 @@
   <depend>rbvogui_robot_local_control</depend>
   <depend>rbvogui_description</depend>
   
-  <!-- universal robot -->
+  <!-- universal robot: <depend>ur_description</depend> -->
   <depend>universal_robot</depend>
-  <depend>ur_description</depend>
 
   <!-- Test rbvogui -->
   <depend>test_rbvogui_common_bringup</depend>
