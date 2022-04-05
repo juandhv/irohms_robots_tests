@@ -9,6 +9,7 @@
     <arg name="rviz_package" default="$(optenv RVIZ_PACKAGE rbvogui_gazebo)"/>
     
     <!-- What to run -->
+    <arg name="moveit" default="false"/>
     <arg name="localization" default="false"/>
     <arg name="mapping" default="false"/>
     <arg name="navigation" default="false"/>
@@ -35,18 +36,13 @@
     <arg name="launch_arm" default="$(optenv ROBOT_HAS_ARM true)"/>
     <arg name="arm_manufacturer" default="$(optenv ROBOT_ARM_MANUFACTURER ur)"/>
     <arg name="arm_model" default="$(optenv ROBOT_ARM_MODEL ur5)"/>
-    <arg name="moveit" default="false"/>
     
     <!-- Gripper Configuration -->
     <arg name="launch_gripper" default="$(optenv ROBOT_HAS_GRIPPER true)"/>
     <arg name="gripper_manufacturer" default="$(optenv ROBOT_GRIPPER_MANUFACTURER onrobot)"/>
     <arg name="gripper_model" default="$(optenv ROBOT_GRIPPER_MODEL rg2)"/>
-    
-    <!-- RViz configuration -->
-    <param name="rviz_sim_mode" if="$(eval localization == True or mapping == True)" type="str" value="rbvogui_map"/>
-    <param name="rviz_sim_mode" unless="$(eval localization == True or mapping == True)" type="str" value="rbvogui_odom"/>
 
-    <!-- Launch the rbvogui with ur5 arm -->
+    <!-- Launch the rbvogui with ur5 arm and rg2 gripper -->
     <include file="$(eval find(sim_bringup_package) + '/launch/rbvogui_complete.launch')">
         <arg name="simulation_package" value="$(arg simulation_package)"/>
         <arg name="config_package" value="$(arg config_package)"/>
@@ -54,9 +50,7 @@
         <arg name="run_localization" value="$(arg localization)"/>
         <arg name="run_mapping" value="$(arg mapping)"/>
         <arg name="run_navigation" value="$(arg navigation)"/>
-        
-        
-        
+                
         <arg name="world" value="$(arg world)"/>
         <arg name="world_file" value="$(arg world_file)"/>
         
@@ -74,8 +68,6 @@
         <arg name="arm_model" value="$(arg arm_model)"/>
         
         <arg name="run_rviz" value="$(arg run_rviz)"/>
-        <!--arg name="rviz_config_file" default="$(arg rviz_config_file)"/>
-        <arg name="rviz_config_path" value="$(arg rviz_config_path)"/-->
     </include>
     
     <!-- Moveit! for manipulating arm -->
@@ -103,13 +95,7 @@
           <arg name="pipeline" value="$(arg pipeline)"/>
           <arg name="load_robot_description" value="$(arg load_robot_description)"/>
         </include>
-
-        <!-- Run Rviz and load the default config to see the state of the move_group node -->
-        <include file="$(find rbvogui_ur5_rg2_moveit)/launch/moveit_rviz.launch">
-          <arg name="rviz_config" value="$(find rbvogui_ur5_rg2_moveit)/launch/moveit.rviz"/>
-          <arg name="debug" value="$(arg debug)"/>
-        </include>
-                
+        
         <!-- Move rbvogui arm -->    
         <node pkg="rbvogui_gazebo" type="move_arm_joint_by_joint.py" name="rbvogui_moveit_home" output="screen"/>
     </group>

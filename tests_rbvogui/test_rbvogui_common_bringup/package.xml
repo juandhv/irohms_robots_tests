@@ -18,11 +18,11 @@
   
   <!-- Robotnik -->
   <depend>rbvogui_ur5_rg2_moveit</depend>
-  <depend>moveit_commander</depend>
   
-  <!-- Moveit 
+  <!-- Moveit -->
+  <depend>moveit_commander</depend>
   <depend>moveit_core</depend>
   <depend>moveit_ros_planning_interface</depend>
-  <depend>moveit_ros_perception</depend>  -->
+  <depend>moveit_ros_perception</depend>  
 
 </package>

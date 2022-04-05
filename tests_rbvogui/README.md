@@ -65,7 +65,7 @@ test-rbvogui-simulation-full mapping:=true
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz config_file:=map
+test-rbvogui-desktop-rviz
 ```
 
 Start moving the robot around using the teleop panel in Rviz and the map will start appearing in the RViz window.
@@ -93,10 +93,10 @@ test-rbvogui-simulation-full localization:=true x_pose:=3 y_pose:=1
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz config_file:=map
+test-rbvogui-desktop-rviz
 ```
 
-Once the simulation is running completely, use the `2D Pose Estimate` tool located in the upper part of RViz and mark the estimated position of the robot with reference of the gazebo simulation.
+Once the simulation is running completely, use the `2D Pose Estimate` tool located in the upper part of RViz and mark the estimated position of the robot using gazebo simulation as a reference.
 
 Then start moving the robot around using the teleop panel, eventually you will see the red particles around the robot converging to a single point in RViz meaning it has localized successfully.
 
@@ -115,9 +115,9 @@ test-rbvogui-simulation-full localization:=true navigation:=true
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz config_file:=map
+test-rbvogui-desktop-rviz
 ```
 
 
-Use the `2D Nav Goal` tool in the upper side of RViz and set a goal for the robot, it should start moving towards the goal. It is also possible to localize the robot simply by defining goals but closing the teleop window is needed.
+Use the `2D Nav Goal` tool in the upper side of RViz and set a goal for the robot, it should start moving towards the goal. It is also possible to localize the robot simply by defining goals.
 
