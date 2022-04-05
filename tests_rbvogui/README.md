@@ -10,7 +10,7 @@ Before installing any new package, update your installed packages:
 irohms-get update
 ```
 
-To install (check out) the RB Vogui tests in simulation:
+To install (check out) the Vogui+ tests in simulation:
 
 ```
 irohms-get install ros-test_rbvogui_simulation_bringup
@@ -40,7 +40,11 @@ Wait until the robot has put its arm up.
 
 ## 1.1 Using RViz visuals:
 
-Once the simulation is running, check and activate the `MotionPlanning` display at the left of RViz, if not activated. Use the visuals from RViz to move the arms to a desired position:
+Once the simulation is running, check and activate the `MotionPlanning` display at the left of RViz, if not activated. Use the visuals in RViz to move the arms to a desired position or select preset poses using the start state and goal state dropdowns.
+
+<p align="center">
+  <img src="doc/moveit.png" height="600" />
+</p>
 
 Afterwards use the `Plan` and `Execute` buttons to move the VOGUI+'s arms.
 
@@ -69,6 +73,11 @@ test-rbvogui-desktop-rviz
 ```
 
 Start moving the robot around using the teleop panel in Rviz and the map will start appearing in the RViz window.
+Ensure that the `MotionPlanning` display is disabled since we are interested in mapping the scene.
+
+<p align="center">
+  <img src="doc/mapping.png" height="450" />
+</p>
 
 Once all the mapping procedure is finished or it is desired to save the map, open a new terminal in a specific directory and run the following command without closing the simulation:
 
