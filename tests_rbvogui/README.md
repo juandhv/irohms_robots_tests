@@ -13,13 +13,19 @@ irohms-get update
 To install (check out) the Vogui+ tests in simulation:
 
 ```
-irohms-get install ros-test_rbvogui_simulation_bringup
+irohms-get install ros-test_rbvogui_simulation_bringup 
+irohms-get install ros-rbvogui_common
 ```
 
 To build the new packages:
 
 ```
 irohms-make
+```
+
+Source updated setup files:
+```
+source ~/.bashrc
 ```
 
 ## 1. MoveIt! tests:
