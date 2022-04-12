@@ -14,6 +14,7 @@
   <depend>velodyne_gazebo_plugins</depend>
   
   <!-- rbvogui_sim -->
+  <depend>gazebo_ros_control</depend>
   <depend>rbvogui_gazebo</depend>
   <depend>rbvogui_sim_bringup</depend>
   
