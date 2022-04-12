@@ -81,10 +81,8 @@ for repo, details in repos.items():
             # verify repo pkg in targets: otherwise create TODO: skip create???
             if ros_repo not in targets:
                 os.makedirs(repo_dir)
-                print("mkdir success: ", repo_dir)
             
             # verify install.yaml in repo pkg: otherwise create
-            print("repo_dir :", repo_dir)  # TODO: restructure to "Found repo at ~/... !"
             target_file = safetouch(file=TARGET_FILE, folder_path=repo_dir)
             
             # read target yaml
@@ -93,10 +91,8 @@ for repo, details in repos.items():
             repo_url = details["url"].replace("https://", "git@").replace('/', ':', 1)
             if repo_url[-4:] != ".git":
                 repo_url = repo_url+".git"
-            print("url: ", repo_url)
             
             if target_yaml is None:
-                print("blank yaml, attempting update")
                 target_yaml = [{
                    "source": {
                      "type": details["type"],
@@ -108,7 +104,6 @@ for repo, details in repos.items():
                 }]
                 
             else:  # target yaml is not empty
-                print(target_yaml[0])  # TODO: remove
                 # check git target: otherwise skip
                 if target_yaml[0]['source']['type'] == 'git':
                     # verify url and version match: otherwise update
@@ -127,7 +122,6 @@ for repo, details in repos.items():
     # verify repo pkg in targets: otherwise create
     if ros_repo not in targets:
         os.makedirs(repo_dir)
-        print("mkdir success: ", repo_dir)  # TODO: restructure
     
     # verify install.yaml in repo pkg: otherwise create
     print("repo_dir :", repo_dir)
@@ -135,7 +129,6 @@ for repo, details in repos.items():
     
     # read target yaml
     target_yaml = yaml.safe_load(target_file.open())
-    print(target_yaml[0])  # TODO: remove
     
     repo_url = details["url"].replace("https://", "git@").replace('/', ':', 1)
     if repo_url[-4:] != ".git":
@@ -163,4 +156,4 @@ for repo, details in repos.items():
     # write yaml to target file
     yaml.safe_dump(target_yaml, target_file.open('w'))
 
-
+print("Exit code: 0")

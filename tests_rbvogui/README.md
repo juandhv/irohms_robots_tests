@@ -10,7 +10,19 @@ Before installing any new package, update your installed packages:
 irohms-get update
 ```
 
-To install (check out) the Vogui+ tests in simulation:
+#### (OPTIONAL) To check out updated dependencies from Robotnik, run the following in a Python3 environment:
+
+```bash
+pip install -r https://raw.githubusercontent.com/samuelsont/irohms_robots_tests/main/tests_rbvogui/helper/requirements.txt
+python <(wget -O - https://raw.githubusercontent.com/samuelsont/irohms_robots_tests/main/tests_rbvogui/helper/pre_install.py)
+```
+To roll back the changes to the targets folder:
+
+```bash
+cd $IROHMS_ENV_TARGETS_DIR/ && git reset --hard
+```
+
+#### To install (check out) the Vogui+ tests in simulation:
 
 ```
 irohms-get install ros-test_rbvogui_simulation_bringup 
