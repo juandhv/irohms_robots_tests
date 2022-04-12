@@ -37,7 +37,6 @@
   
   <!-- universal robot: gazebo, kinematics-->
   <depend>ur_description</depend>
-  <depend>ur5_moveit_config</depend>
   
   <!-- gripper -->
   <depend>rbvogui_ur5_rg2_moveit</depend>
