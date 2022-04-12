@@ -16,8 +16,31 @@
   <depend>rospy</depend>
   <depend>std_msgs</depend>
   
-  <!-- Robotnik -->
+  <!-- rbvogui common -->
+  <depend>rbvogui_common</depend>
+  <depend>rbvogui_control</depend>
+  <depend>rbvogui_localization</depend>
+  <depend>rbvogui_navigation</depend>
+  <depend>rbvogui_robot_local_control</depend>
+  <depend>rbvogui_description</depend>
+  <depend>robotnik_pad</depend>
+  <depend>teleop_panel</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>joint_read_command_controller</depend>
+  
+  <!-- universal robot: gazebo, kinematics-->
+  <depend>ur_description</depend>
+  <depend>ur5_moveit_config</depend>
+  
+  <!-- gripper -->
   <depend>rbvogui_ur5_rg2_moveit</depend>
+  <depend>rg2_gripper_common</depend>
+  
+  <!-- Robotnik velodyne_simulator -->
+  <depend>velodyne_description</depend>
+  
+   <!-- Laser merge tool -->
+  <depend>ira_laser_tools</depend>
   
   <!-- Moveit -->
   <depend>moveit_commander</depend>
