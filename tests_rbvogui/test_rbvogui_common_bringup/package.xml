@@ -15,18 +15,25 @@
   
   <depend>rospy</depend>
   <depend>std_msgs</depend>
+  <depend>tf</depend>
+  <depend>urdf</depend>
+  <depend>twist_mux</depend>
+  <depend>ackermann-msgs</depend>
+  <depend>sensor-msgs</depend>
+  <depend>controller-interface</depend>
+  
+  <depend>teleop_panel</depend>
+  <depend>rqt_joint_trajectory_controller</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>joint_read_command_controller</depend>
   
   <!-- rbvogui common -->
-  <depend>rbvogui_common</depend>
   <depend>rbvogui_control</depend>
   <depend>rbvogui_localization</depend>
   <depend>rbvogui_navigation</depend>
   <depend>rbvogui_robot_local_control</depend>
   <depend>rbvogui_description</depend>
   <depend>robotnik_pad</depend>
-  <depend>teleop_panel</depend>
-  <depend>joint_trajectory_controller</depend>
-  <depend>joint_read_command_controller</depend>
   
   <!-- universal robot: gazebo, kinematics-->
   <depend>ur_description</depend>
