@@ -1,52 +1,57 @@
 <package format="2">
   <name>test_rbvogui_common_bringup</name>
   <version>0.0.0</version>
-  <description>The test_rbvogui_common_bringup package</description>
-
+  <description>
+    The test_rbvogui_common_bringup package. 
+    Navigation and manipulator arm scripted demos for rbvogui with ur5 arm and rg2 grippper.
+  </description>
+  
   <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
-
-  <license>TODO</license>
-
+  <maintainer email="AtibaS@cardiff.ac.uk">Samuelson T. Atiba</maintainer>
+  
+  <license>MIT</license>
+  
   <buildtool_depend>catkin</buildtool_depend>
   
-  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>tf</depend>
+  <depend>urdf</depend>
+  <depend>twist_mux</depend>
+  <depend>ackermann_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>controller_interface</depend>
   
-  <!-- Robotnik -->
+  <depend>teleop_panel</depend>
+  <depend>rqt_joint_trajectory_controller</depend>
+  <depend>joint_trajectory_controller</depend>
   <depend>joint_read_command_controller</depend>
-  <depend>robotnik_pad</depend>
-  <depend>robotnik_pad_msgs</depend>
-  <depend>robotnik_pad_plugins</depend>
-  <depend>ewellix_description</depend>
-
-  <!-- rbvogui_common -->
+  
+  <!-- rbvogui common -->
   <depend>rbvogui_control</depend>
-  <depend>rbvogui_description</depend>
   <depend>rbvogui_localization</depend>
   <depend>rbvogui_navigation</depend>
-  <depend>rbvogui_pad</depend>
   <depend>rbvogui_robot_local_control</depend>
-  <depend>rbvogui_common</depend>
-  <depend>teleop_panel</depend>
+  <depend>rbvogui_description</depend>
+  <depend>robotnik_pad</depend>
   
-  <depend>rbvogui_moveit_ur10</depend>
-  <depend>rbvogui_xl_2ur10_e_moveit</depend>
-
-  <!-- universal_robots -->
+  <!-- universal robot: gazebo, kinematics-->
   <depend>ur_description</depend>
-
-  <!-- World model 
-  <depend>map_server</depend>
-  <depend>amcl</depend>
-  <depend>gmapping</depend>
-  <depend>octomap</depend>
-  <depend>octomap_rviz_plugins</depend> -->
-
-  <!-- Navigation
-  <depend>robot_localization</depend>  -->
   
-  <!-- Moveit 
+  <!-- gripper -->
+  <depend>rbvogui_ur5_rg2_moveit</depend>
+  <depend>rg2_gripper_common</depend>
+  
+  <!-- Robotnik velodyne_simulator -->
+  <depend>velodyne_description</depend>
+  
+   <!-- Laser merge tool -->
+  <depend>ira_laser_tools</depend>
+  
+  <!-- Moveit -->
+  <depend>moveit_commander</depend>
   <depend>moveit_core</depend>
   <depend>moveit_ros_planning_interface</depend>
-  <depend>moveit_ros_perception</depend>  -->
+  <depend>moveit_ros_perception</depend>  
 
 </package>

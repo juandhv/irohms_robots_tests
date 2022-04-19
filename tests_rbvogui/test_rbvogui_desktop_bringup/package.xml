@@ -4,31 +4,11 @@
   <description>The test_rbvogui_desktop_bringup package</description>
 
   <maintainer email="HernandezVegaJ@cardiff.ac.uk">Juan D. Hernandez Vega</maintainer>
+  <maintainer email="AtibaS@cardiff.ac.uk">Samuelson T. Atiba</maintainer>
 
   <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <depend>roscpp</depend>
-
-  <!-- rbvogui 
-  <depend>cob_navigation</depend>
-  <depend>cob_moveit_bringup</depend> -->
-  <!--depend>cob_pick_place_action</depend-->
- 
-  <!-- World model 
-  <depend>map_server</depend>
-  <depend>amcl</depend>
-  <depend>gmapping</depend>
-  <depend>octomap</depend>
-  <depend>octomap_rviz_plugins</depend> -->
-
-  <!-- Navigation
-  <depend>robot_localization</depend>  -->
-  
-  <!-- Moveit 
-  <depend>moveit_core</depend>
-  <depend>moveit_ros_planning_interface</depend>
-  <depend>moveit_ros_perception</depend> -->
-
+  <depend>test_rbvogui_common_bringup</depend>
 </package>

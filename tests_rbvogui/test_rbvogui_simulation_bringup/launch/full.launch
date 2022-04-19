@@ -1,40 +1,103 @@
+<?xml version="1.0"?>
 <launch>
-    <!-- The planning and execution components of MoveIt! configured to run -->
-    <!-- using the ROS-Industrial interface. -->
+
+    <!-- Simulator Configuration -->
+    <arg name="simulation_package" default="$(optenv SIMULATION_CONFIG_PACKAGE rbvogui_gazebo)"/>
+    <arg name="config_package" default="$(optenv CONFIG_PACKAGE rbvogui_gazebo)"/>
+    <arg name="sim_bringup_package" default="$(optenv SIM_BRINGUP_PACKAGE rbvogui_sim_bringup)"/>
+    <arg name="world_package" default="$(optenv WORLD_PACKAGE rbvogui_gazebo)"/> 
+    <arg name="rviz_package" default="$(optenv RVIZ_PACKAGE rbvogui_gazebo)"/>
     
-    <!-- | 		PARAMETERS  		| -->
-    <!-- hardware_interface to use : PositionJointInterface, EffortJointInterface, VelocityJointInterface. -->
-    <arg name="hardware_interface" default="PositionJointInterface"/>
-    <!-- The is gonna have its nodes/topics under a namespace with the same name. -->
-    <arg name="robot_name" default="iiwa"/>
-    <!-- Model of the iiwa to use : iiwa7, iiwa14 -->
-    <arg name="model" default="iiwa14" />
-    <arg name="rviz" default="true" />
-	<!-- Use move_group -->
-    <arg name="moveit" default="true" />
+    <!-- What to run -->
+    <arg name="moveit" default="false"/>
+    <arg name="localization" default="false"/>
+    <arg name="mapping" default="false"/>
+    <arg name="navigation" default="false"/>
+    <arg name="run_rviz" default="false"/>
     
-    <remap from="/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" 
-           to="/$(arg robot_name)/$(arg hardware_interface)_trajectory_controller/follow_joint_trajectory" />
-    <remap from="robot_description" to="/$(arg robot_name)/robot_description" /> 
-    <remap from="/get_planning_scene" to="/$(arg robot_name)/get_planning_scene" /> 
+    <!-- Simulation configuration -->
+    <arg name="world" default="$(optenv ROBOT_SIM_GAZEBO_WORLD worlds/demo.world)" /> <!-- demo.world, rbvogui.world -->
+    <arg name="world_file" default="$(eval find(world_package) + '/' + world)"/>
+  
+    <!-- Localization configuration -->
+    <arg name="map_file" default="demo/demo.yaml"/>
+     
+    <!-- Robot Configuration -->
+    <arg name="robot_id" default="$(optenv ROBOT_ID robot)"/>
+    <arg name="prefix" default="$(arg robot_id)_"/>
+    <arg name="robot_model" default="$(optenv ROBOT_MODEL rbvogui)"/>
+    <arg name="robot_xacro" default="$(optenv ROBOT_XACRO rbvogui_std_ur5_rg2.urdf.xacro)"/>
+    <arg name="x_pose" default="$(optenv ROBOT_SIM_GAZEBO_INIT_POSE_X 0)"/>
+    <arg name="y_pose" default="$(optenv ROBOT_SIM_GAZEBO_INIT_POSE_Y 0)"/>
+    <arg name="z_pose" default="$(optenv ROBOT_SIM_GAZEBO_INIT_POSE_Z 0)"/>
+    <arg name="a_pose" default="$(optenv ROBOT_SIM_GAZEBO_INIT_POSE_A 0)"/>
     
-    <!-- Run the robot within a Gazebo simulation. -->
-    <!-- Load Gazebo with given values -->
-    <include file="$(find iiwa_gazebo)/launch/iiwa_gazebo.launch">
-        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
-        <arg name="robot_name" value="$(arg robot_name)" />
-        <arg name="model" value="$(arg model)"/>
+    <!-- Arm Configuration -->
+    <arg name="launch_arm" default="$(optenv ROBOT_HAS_ARM true)"/>
+    <arg name="arm_manufacturer" default="$(optenv ROBOT_ARM_MANUFACTURER ur)"/>
+    <arg name="arm_model" default="$(optenv ROBOT_ARM_MODEL ur5)"/>
+    
+    <!-- Gripper Configuration -->
+    <arg name="launch_gripper" default="$(optenv ROBOT_HAS_GRIPPER true)"/>
+    <arg name="gripper_manufacturer" default="$(optenv ROBOT_GRIPPER_MANUFACTURER onrobot)"/>
+    <arg name="gripper_model" default="$(optenv ROBOT_GRIPPER_MODEL rg2)"/>
+
+    <!-- Launch the rbvogui with ur5 arm and rg2 gripper -->
+    <include file="$(eval find(sim_bringup_package) + '/launch/rbvogui_complete.launch')">
+        <arg name="simulation_package" value="$(arg simulation_package)"/>
+        <arg name="config_package" value="$(arg config_package)"/>
+        
+        <arg name="run_localization" value="$(arg localization)"/>
+        <arg name="run_mapping" value="$(arg mapping)"/>
+        <arg name="run_navigation" value="$(arg navigation)"/>
+                
+        <arg name="world" value="$(arg world)"/>
+        <arg name="world_file" value="$(arg world_file)"/>
+        
+        <arg name="map_file" value="$(arg map_file)"/>
+            
+        <arg name="robot_model" default="$(arg robot_model)"/>
+        <arg name="robot_xacro" default="$(arg robot_xacro)"/>
+        <arg name="x_init_pose" value="$(arg x_pose)"/>
+        <arg name="y_init_pose" value="$(arg y_pose)"/>
+        <arg name="z_init_pose" value="$(arg z_pose)"/>
+        <arg name="a_init_pose" value="$(arg a_pose)"/>
+        
+        <arg name="launch_arm" default="$(arg launch_arm)"/>
+        <arg name="arm_manufacturer" value="$(arg arm_manufacturer)"/>
+        <arg name="arm_model" value="$(arg arm_model)"/>
+        
+        <arg name="run_rviz" value="$(arg run_rviz)"/>
     </include>
     
-    <!-- Load move_group -->
-    <group ns="$(arg robot_name)" if="$(arg moveit)">
-        <include file="$(find iiwa_moveit)/launch/move_group.launch">
-            <arg name="publish_monitored_planning_scene" value="true" />
-            <arg name="hardware_interface" value="$(arg hardware_interface)"/>
-            <arg name="robot_name" value="$(arg robot_name)"/>
-            <arg name="model" value="$(arg model)" />
+    <!-- Moveit! for manipulating arm -->
+    <group ns="$(arg robot_id)" if="$(arg moveit)">
+        <!-- specify the planning pipeline -->
+        <arg name="pipeline" default="ompl" />
+
+        <!-- By default, we are not in debug mode -->
+        <arg name="debug" default="false" />
+
+        <!-- By default, we will load or override the robot_description -->
+        <arg name="load_robot_description" default="true"/>
+
+        <!-- Set execution mode for fake execution controllers -->
+        <arg name="execution_type" default="interpolate" />
+        
+        <!-- Run the main MoveIt! executable without trajectory execution
+             (we do not have controllers configured by default) -->
+        <include file="$(find rbvogui_ur5_rg2_moveit)/launch/move_group.launch">
+          <arg name="allow_trajectory_execution" value="true"/>
+          <arg name="fake_execution" value="false"/>
+          <arg name="execution_type" value="$(arg execution_type)"/>
+          <arg name="info" value="true"/>
+          <arg name="debug" value="$(arg debug)"/>
+          <arg name="pipeline" value="$(arg pipeline)"/>
+          <arg name="load_robot_description" value="$(arg load_robot_description)"/>
         </include>
+        
+        <!-- Move rbvogui arm -->    
+        <node pkg="rbvogui_gazebo" type="move_arm_joint_by_joint.py" name="rbvogui_moveit_home" output="screen"/>
     </group>
-    
-    <include if="$(arg rviz)" file="$(find test_iiwa_desktop_bringup)/launch/rviz.launch"/>
+
 </launch>
