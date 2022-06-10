@@ -1,4 +1,4 @@
-certifi==2021.10.8
+certifi
 charset-normalizer==2.0.12
 idna==3.3
 pkg-resources==0.0.0
