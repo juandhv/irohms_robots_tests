@@ -9,7 +9,7 @@
     <arg name="robot_name" default="$(optenv ROBOT_ID robot)"/>
     
     <!-- Specify rviz config file -->
-    <arg name="rviz_config" default="default" />
+    <arg name="rviz_config" default="map" />
     
     <arg name="rviz_config_file" default="parameters/tools/rviz/$(arg rviz_config).rviz"/>
     <arg name="rviz_config_path" default="$(eval find(rviz_package) + '/' + rviz_config_file)"/>
