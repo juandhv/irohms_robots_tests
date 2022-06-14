@@ -51,7 +51,7 @@ test-rbvogui-simulation-full moveit:=true
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz
+test-rbvogui-desktop-rviz rviz_config:=moveit
 ```
 
 Wait until the robot has put its arm up.
@@ -87,7 +87,7 @@ test-rbvogui-simulation-full mapping:=true
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz
+test-rbvogui-desktop-rviz rviz_config:=map
 ```
 
 Start moving the robot around using the teleop panel in Rviz and the map will start appearing in the RViz window.
@@ -120,7 +120,7 @@ test-rbvogui-simulation-full localization:=true x_pose:=3 y_pose:=1
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz
+test-rbvogui-desktop-rviz rviz_config:=map
 ```
 
 Once the simulation is running completely, use the `2D Pose Estimate` tool located in the upper part of RViz and mark the estimated position of the robot using gazebo simulation as a reference.
@@ -142,7 +142,7 @@ test-rbvogui-simulation-full localization:=true navigation:=true
 To start RViz and teleoperate the base:
 
 ```bash
-test-rbvogui-desktop-rviz
+test-rbvogui-desktop-rviz rviz_config:=map
 ```
 
 
